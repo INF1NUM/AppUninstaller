@@ -44,7 +44,7 @@ namespace AppUninstaller
                 }
             }
         }
-
+        
         private void backgroundWorkerStartServer_DoWork(object sender, DoWorkEventArgs e)
         {
             e.Result = AdbServer.Instance.StartServer(Application.StartupPath + @"\tools\adb.exe", false);
@@ -62,7 +62,7 @@ namespace AppUninstaller
                 deviceMonitor.Start();
                 buttonServer.Enabled = true;
                 WriteLog($"Server started with result: {result.ToString()}");
-                WriteLog($"ADB version: {AdbClient.Instance.GetAdbVersion()}");
+                WriteLog($"ADB version: {AdbServer.Instance.GetStatus().Version}");
             }
             else
                 WriteLog($"Server NOT started with result: {result.ToString()}");
@@ -101,19 +101,19 @@ namespace AppUninstaller
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            //if (adbServer != null && adbServer.GetStatus().IsRunning)
-            //{
-            //    var result = MessageBox.Show("ADB server is running. Do you want to kill server and exit", "ADB Uninstaller", MessageBoxButtons.YesNoCancel);
-            //    if (result == DialogResult.Yes)
-            //        AdbClient.Instance.KillAdb();
-            //    else
-            //    {
-            //        if (result == DialogResult.Cancel)
-            //        {
-            //            e.Cancel = true;
-            //        }
-            //    }
-            //}
+            if (ServerIsRunning)
+            {
+                var result = MessageBox.Show("ADB server is running. Do you want to kill server and exit", "ADB Uninstaller", MessageBoxButtons.YesNoCancel);
+                if (result == DialogResult.Yes)
+                    StopServer();
+                else
+                {
+                    if (result == DialogResult.Cancel)
+                    {
+                        e.Cancel = true;
+                    }
+                }
+            }
         }
 
         private void buttonServer_Click(object sender, EventArgs e)
@@ -149,8 +149,7 @@ namespace AppUninstaller
         {
             if (ServerIsRunning && devices.Count > 0)
             {
-                var device = (DeviceData)comboBoxDevices.SelectedItem;
-                PackageManager pm = new PackageManager(device);
+                PackageManager pm = new PackageManager(GetSelecetedDevice());
                 listViewPackage.BeginUpdate();
                 listViewPackage.Items.Clear();
                 foreach (var package in pm.Packages)
