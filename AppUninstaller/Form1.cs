@@ -76,7 +76,7 @@ namespace AppUninstaller
             devices.Clear();
             listViewPackage.Items.Clear();
         }
-
+        
         private DeviceData GetSelecetedDevice()
         {
             if (comboBoxDevices.InvokeRequired)
