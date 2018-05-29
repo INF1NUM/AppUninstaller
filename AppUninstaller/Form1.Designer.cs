@@ -41,10 +41,10 @@
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
-            this.comboBoxDevices = new System.Windows.Forms.ComboBox();
-            this.backgroundWorkerStartServer = new System.ComponentModel.BackgroundWorker();
             this.toolStripTextBoxFilter = new System.Windows.Forms.ToolStripTextBox();
             this.toolStripLabelFilter = new System.Windows.Forms.ToolStripLabel();
+            this.comboBoxDevices = new System.Windows.Forms.ComboBox();
+            this.backgroundWorkerStartServer = new System.ComponentModel.BackgroundWorker();
             this.panel1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -121,6 +121,7 @@
             this.listViewPackage.TabIndex = 1;
             this.listViewPackage.UseCompatibleStateImageBehavior = false;
             this.listViewPackage.View = System.Windows.Forms.View.Details;
+            this.listViewPackage.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.listViewPackage_ColumnClick);
             // 
             // columnHeaderPackage
             // 
@@ -152,7 +153,7 @@
             this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
             this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(82, 24);
+            this.toolStripButton1.Size = new System.Drawing.Size(69, 24);
             this.toolStripButton1.Text = "Update";
             this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
             // 
@@ -166,25 +167,8 @@
             this.toolStripButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton2.Image")));
             this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton2.Name = "toolStripButton2";
-            this.toolStripButton2.Size = new System.Drawing.Size(90, 24);
+            this.toolStripButton2.Size = new System.Drawing.Size(77, 24);
             this.toolStripButton2.Text = "Uninstall";
-            // 
-            // comboBoxDevices
-            // 
-            this.comboBoxDevices.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.comboBoxDevices.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxDevices.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.comboBoxDevices.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.comboBoxDevices.FormattingEnabled = true;
-            this.comboBoxDevices.Location = new System.Drawing.Point(502, 15);
-            this.comboBoxDevices.Name = "comboBoxDevices";
-            this.comboBoxDevices.Size = new System.Drawing.Size(248, 26);
-            this.comboBoxDevices.TabIndex = 3;
-            // 
-            // backgroundWorkerStartServer
-            // 
-            this.backgroundWorkerStartServer.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorkerStartServer_DoWork);
-            this.backgroundWorkerStartServer.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorkerStartServer_RunWorkerCompleted);
             // 
             // toolStripTextBoxFilter
             // 
@@ -196,8 +180,25 @@
             // 
             this.toolStripLabelFilter.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.toolStripLabelFilter.Name = "toolStripLabelFilter";
-            this.toolStripLabelFilter.Size = new System.Drawing.Size(42, 24);
+            this.toolStripLabelFilter.Size = new System.Drawing.Size(33, 24);
             this.toolStripLabelFilter.Text = "Filter";
+            // 
+            // comboBoxDevices
+            // 
+            this.comboBoxDevices.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.comboBoxDevices.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxDevices.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.comboBoxDevices.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.comboBoxDevices.FormattingEnabled = true;
+            this.comboBoxDevices.Location = new System.Drawing.Point(502, 15);
+            this.comboBoxDevices.Name = "comboBoxDevices";
+            this.comboBoxDevices.Size = new System.Drawing.Size(248, 23);
+            this.comboBoxDevices.TabIndex = 3;
+            // 
+            // backgroundWorkerStartServer
+            // 
+            this.backgroundWorkerStartServer.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorkerStartServer_DoWork);
+            this.backgroundWorkerStartServer.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorkerStartServer_RunWorkerCompleted);
             // 
             // Form1
             // 

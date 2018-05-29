@@ -15,9 +15,11 @@ namespace AppUninstaller
 {
     public partial class Form1 : Form
     {
+        ItemComparer itemComparer = new ItemComparer();
         public Form1()
         {
             InitializeComponent();
+            listViewPackage.ListViewItemSorter = itemComparer;
             devices = new BindingList<DeviceData>();
             comboBoxDevices.DataSource = devices;
             comboBoxDevices.DisplayMember = "Serial";
@@ -164,6 +166,14 @@ namespace AppUninstaller
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
             FillPakageList();
+        }
+
+        private void listViewPackage_ColumnClick(object sender, ColumnClickEventArgs e)
+        {
+            //Указываем сортируемую колонку
+            itemComparer.ColumnIndex = e.Column;
+            //Непосредственно инициируем сортировку
+            ((ListView)sender).Sort();
         }
     }
 }
