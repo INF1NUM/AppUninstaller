@@ -100,6 +100,28 @@ namespace AppUninstaller
             }
         }
 
+        private void FillPakageList()
+        {
+            if (ServerIsRunning && devices.Count > 0)
+            {
+                PackageManager pm = new PackageManager(GetSelecetedDevice(), PackageManager.AppListType.SystemOnly);
+                List<PackageData> packages = new List<PackageData>();
+                foreach (var package in pm.Packages)
+                {
+                    //VersionInfo vi = pm.GetVersionInfo(package.Key);
+                    //packages.Add(new PackageData(package.Key, package.Value,vi.VersionName, vi.VersionCode));
+                    packages.Add(new PackageData(package.Key, package.Value));
+                }
+                objectListViewPackages.SetObjects(packages);
+                objectListViewPackages.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+            }
+        }
+
+        private void UninstallApp(PackageData package)
+        {
+            
+        }
+
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (ServerIsRunning)
@@ -145,20 +167,7 @@ namespace AppUninstaller
             this.BeginInvoke(new MethodInvoker(() => this.devices.Remove(e.Device)));
             WriteLog($"The device {e.Device.Name} {e.Device.Serial} has disconnected to this PC");
         }
-
-        private void FillPakageList()
-        {
-            if (ServerIsRunning && devices.Count > 0)
-            {
-                PackageManager pm = new PackageManager(GetSelecetedDevice());
-                List<PackageData> packages = new List<PackageData>();
-                foreach (var package in pm.Packages)
-                    packages.Add(new PackageData(package.Key, package.Value));
-                objectListViewPackages.SetObjects(packages);
-                objectListViewPackages.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
-            }
-        }
-
+        
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
             FillPakageList();
@@ -177,6 +186,15 @@ namespace AppUninstaller
                 olv.DefaultRenderer = new HighlightTextRenderer(filter);
 
             olv.AdditionalFilter = filter;
+        }
+
+        private void toolStripButton2_Click(object sender, EventArgs e)
+        {
+            if(objectListViewPackages.CheckedObjects.Count > 0 &&
+                MessageBox.Show("Do you realy want to delete selected application?") == DialogResult.Yes)
+            {
+
+            }
         }
     }
 }

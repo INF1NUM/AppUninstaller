@@ -54,9 +54,6 @@
     <Reference Include="ObjectListView, Version=2.9.1.1072, Culture=neutral, PublicKeyToken=b1c5bf581481bcd4, processorArchitecture=MSIL">
       <HintPath>..\packages\ObjectListView.Official.2.9.1\lib\net20\ObjectListView.dll</HintPath>
     </Reference>
-    <Reference Include="SharpAdbClient, Version=2.2.0.0, Culture=neutral, PublicKeyToken=d728076f5d82a2e8, processorArchitecture=MSIL">
-      <HintPath>..\packages\SharpAdbClient.2.2.6\lib\net451\SharpAdbClient.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Design" />
@@ -124,6 +121,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\round-arrow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SharpAdbClient\SharpAdbClient.csproj">
+      <Project>{0eae9efc-b0e0-499f-9bfe-7d0045f0a3a1}</Project>
+      <Name>SharpAdbClient</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

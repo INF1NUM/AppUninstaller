@@ -6,6 +6,11 @@ namespace AppUninstaller
     {
         public bool IsActive = true;
 
+        //public PackageData(string name, string path, string versionName, int versionCode)
+        //{
+        //    this.Name = name; this.Path = path; this.VersionName = versionName; this.VersionCode = versionCode;
+        //}
+
         public PackageData(string name, string path)
         {
             this.Name = name; this.Path = path;
@@ -13,6 +18,8 @@ namespace AppUninstaller
 
         public string Name { get; private set; }
         public string Path { get; private set; }
+        //public string VersionName { get; private set; }
+        //public int VersionCode { get; private set; }
 
 
         #region Implementation of INotifyPropertyChanged
