@@ -8,7 +8,6 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using BrightIdeasSoftware;
 using SharpAdbClient;
 using SharpAdbClient.DeviceCommands;
 
@@ -45,7 +44,7 @@ namespace AppUninstaller
                 }
             }
         }
-
+        
         private void backgroundWorkerStartServer_DoWork(object sender, DoWorkEventArgs e)
         {
             e.Result = AdbServer.Instance.StartServer(Application.StartupPath + @"\tools\adb.exe", false);
@@ -75,9 +74,9 @@ namespace AppUninstaller
             AdbClient.Instance.KillAdb();
             ServerIsRunning = false;
             devices.Clear();
-            objectListViewPackages.ClearObjects();
+            listViewPackage.Items.Clear();
         }
-
+        
         private DeviceData GetSelecetedDevice()
         {
             if (comboBoxDevices.InvokeRequired)
@@ -141,7 +140,7 @@ namespace AppUninstaller
         private void OnDeviceDisconnected(object sender, DeviceDataEventArgs e)
         {
             if (e.Device.Equals(GetSelecetedDevice()))
-                objectListViewPackages.ClearObjects();
+                listViewPackage.BeginInvoke(new MethodInvoker(() => listViewPackage.Items.Clear()));
             this.BeginInvoke(new MethodInvoker(() => this.devices.Remove(e.Device)));
             WriteLog($"The device {e.Device.Name} {e.Device.Serial} has disconnected to this PC");
         }
@@ -151,32 +150,20 @@ namespace AppUninstaller
             if (ServerIsRunning && devices.Count > 0)
             {
                 PackageManager pm = new PackageManager(GetSelecetedDevice());
-                List<PackageData> packages = new List<PackageData>();
+                listViewPackage.BeginUpdate();
+                listViewPackage.Items.Clear();
                 foreach (var package in pm.Packages)
-                    packages.Add(new PackageData(package.Key, package.Value));
-                objectListViewPackages.SetObjects(packages);
-                objectListViewPackages.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+                {
+                    listViewPackage.Items.Add(package.Key).SubItems.Add(package.Value);
+                }
+                listViewPackage.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+                listViewPackage.EndUpdate();
             }
         }
 
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
             FillPakageList();
-        }
-
-        private void toolStripTextBoxFilter_TextChanged(object sender, EventArgs e)
-        {
-            TextMatchFilter filter = null;
-            string txt = ((ToolStripTextBox)sender).Text;
-            ObjectListView olv = objectListViewPackages;
-            if (!String.IsNullOrEmpty(txt))
-                filter = TextMatchFilter.Contains(olv, txt);
-                
-            // Text highlighting requires at least a default renderer
-            if (olv.DefaultRenderer == null)
-                olv.DefaultRenderer = new HighlightTextRenderer(filter);
-
-            olv.AdditionalFilter = filter;
         }
     }
 }
