@@ -34,9 +34,6 @@
             this.columnHeaderTime = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeaderMessage = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.panel1 = new System.Windows.Forms.Panel();
-            this.listViewPackage = new System.Windows.Forms.ListView();
-            this.columnHeaderPackage = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeaderPath = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
@@ -45,8 +42,12 @@
             this.toolStripLabelFilter = new System.Windows.Forms.ToolStripLabel();
             this.comboBoxDevices = new System.Windows.Forms.ComboBox();
             this.backgroundWorkerStartServer = new System.ComponentModel.BackgroundWorker();
+            this.objectListViewPackages = new BrightIdeasSoftware.ObjectListView();
+            this.olvColumnName = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+            this.olvColumnPath = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.panel1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.objectListViewPackages)).BeginInit();
             this.SuspendLayout();
             // 
             // buttonServer
@@ -97,41 +98,13 @@
             this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel1.Controls.Add(this.listViewPackage);
+            this.panel1.Controls.Add(this.objectListViewPackages);
             this.panel1.Controls.Add(this.toolStrip1);
             this.panel1.Location = new System.Drawing.Point(17, 59);
             this.panel1.Margin = new System.Windows.Forms.Padding(4);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(733, 337);
             this.panel1.TabIndex = 2;
-            // 
-            // listViewPackage
-            // 
-            this.listViewPackage.CheckBoxes = true;
-            this.listViewPackage.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeaderPackage,
-            this.columnHeaderPath});
-            this.listViewPackage.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listViewPackage.FullRowSelect = true;
-            this.listViewPackage.GridLines = true;
-            this.listViewPackage.Location = new System.Drawing.Point(0, 27);
-            this.listViewPackage.Margin = new System.Windows.Forms.Padding(4);
-            this.listViewPackage.Name = "listViewPackage";
-            this.listViewPackage.Size = new System.Drawing.Size(733, 310);
-            this.listViewPackage.TabIndex = 1;
-            this.listViewPackage.UseCompatibleStateImageBehavior = false;
-            this.listViewPackage.View = System.Windows.Forms.View.Details;
-            this.listViewPackage.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.listViewPackage_ColumnClick);
-            // 
-            // columnHeaderPackage
-            // 
-            this.columnHeaderPackage.Text = "Package";
-            this.columnHeaderPackage.Width = 150;
-            // 
-            // columnHeaderPath
-            // 
-            this.columnHeaderPath.Text = "Path";
-            this.columnHeaderPath.Width = 200;
             // 
             // toolStrip1
             // 
@@ -153,7 +126,7 @@
             this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
             this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(69, 24);
+            this.toolStripButton1.Size = new System.Drawing.Size(82, 24);
             this.toolStripButton1.Text = "Update";
             this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
             // 
@@ -167,20 +140,22 @@
             this.toolStripButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton2.Image")));
             this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton2.Name = "toolStripButton2";
-            this.toolStripButton2.Size = new System.Drawing.Size(77, 24);
+            this.toolStripButton2.Size = new System.Drawing.Size(90, 24);
             this.toolStripButton2.Text = "Uninstall";
             // 
             // toolStripTextBoxFilter
             // 
             this.toolStripTextBoxFilter.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.toolStripTextBoxFilter.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.toolStripTextBoxFilter.Name = "toolStripTextBoxFilter";
             this.toolStripTextBoxFilter.Size = new System.Drawing.Size(200, 27);
+            this.toolStripTextBoxFilter.TextChanged += new System.EventHandler(this.toolStripTextBoxFilter_TextChanged);
             // 
             // toolStripLabelFilter
             // 
             this.toolStripLabelFilter.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.toolStripLabelFilter.Name = "toolStripLabelFilter";
-            this.toolStripLabelFilter.Size = new System.Drawing.Size(33, 24);
+            this.toolStripLabelFilter.Size = new System.Drawing.Size(42, 24);
             this.toolStripLabelFilter.Text = "Filter";
             // 
             // comboBoxDevices
@@ -192,13 +167,47 @@
             this.comboBoxDevices.FormattingEnabled = true;
             this.comboBoxDevices.Location = new System.Drawing.Point(502, 15);
             this.comboBoxDevices.Name = "comboBoxDevices";
-            this.comboBoxDevices.Size = new System.Drawing.Size(248, 23);
+            this.comboBoxDevices.Size = new System.Drawing.Size(248, 26);
             this.comboBoxDevices.TabIndex = 3;
             // 
             // backgroundWorkerStartServer
             // 
             this.backgroundWorkerStartServer.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorkerStartServer_DoWork);
             this.backgroundWorkerStartServer.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorkerStartServer_RunWorkerCompleted);
+            // 
+            // objectListViewPackages
+            // 
+            this.objectListViewPackages.AllColumns.Add(this.olvColumnName);
+            this.objectListViewPackages.AllColumns.Add(this.olvColumnPath);
+            this.objectListViewPackages.CellEditUseWholeCell = false;
+            this.objectListViewPackages.CheckBoxes = true;
+            this.objectListViewPackages.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.olvColumnName,
+            this.olvColumnPath});
+            this.objectListViewPackages.Cursor = System.Windows.Forms.Cursors.Default;
+            this.objectListViewPackages.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.objectListViewPackages.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.objectListViewPackages.FullRowSelect = true;
+            this.objectListViewPackages.GridLines = true;
+            this.objectListViewPackages.Location = new System.Drawing.Point(0, 27);
+            this.objectListViewPackages.Name = "objectListViewPackages";
+            this.objectListViewPackages.ShowGroups = false;
+            this.objectListViewPackages.Size = new System.Drawing.Size(733, 310);
+            this.objectListViewPackages.TabIndex = 1;
+            this.objectListViewPackages.UseCompatibleStateImageBehavior = false;
+            this.objectListViewPackages.UseFilterIndicator = true;
+            this.objectListViewPackages.UseFiltering = true;
+            this.objectListViewPackages.View = System.Windows.Forms.View.Details;
+            // 
+            // olvColumnName
+            // 
+            this.olvColumnName.AspectName = "Name";
+            this.olvColumnName.Text = "Name";
+            // 
+            // olvColumnPath
+            // 
+            this.olvColumnPath.AspectName = "Path";
+            this.olvColumnPath.Text = "Path";
             // 
             // Form1
             // 
@@ -216,6 +225,7 @@
             this.panel1.PerformLayout();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.objectListViewPackages)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -228,16 +238,16 @@
         private System.Windows.Forms.ColumnHeader columnHeaderMessage;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.ToolStrip toolStrip1;
-        private System.Windows.Forms.ListView listViewPackage;
         private System.Windows.Forms.ToolStripButton toolStripButton1;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton toolStripButton2;
-        private System.Windows.Forms.ColumnHeader columnHeaderPackage;
-        private System.Windows.Forms.ColumnHeader columnHeaderPath;
         private System.Windows.Forms.ComboBox comboBoxDevices;
         private System.ComponentModel.BackgroundWorker backgroundWorkerStartServer;
         private System.Windows.Forms.ToolStripTextBox toolStripTextBoxFilter;
         private System.Windows.Forms.ToolStripLabel toolStripLabelFilter;
+        private BrightIdeasSoftware.ObjectListView objectListViewPackages;
+        private BrightIdeasSoftware.OLVColumn olvColumnName;
+        private BrightIdeasSoftware.OLVColumn olvColumnPath;
     }
 }
 
