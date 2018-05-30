@@ -104,6 +104,7 @@ namespace AppUninstaller
         {
             if (ServerIsRunning && devices.Count > 0)
             {
+                toolStripTextBoxFilter.Text = String.Empty;
                 PackageManager pmSystemOnly = new PackageManager(GetSelecetedDevice(), PackageManager.AppListType.SystemOnly);
                 PackageManager pmThirdParty = new PackageManager(GetSelecetedDevice(), PackageManager.AppListType.ThirdPartyOnly);
                 List<PackageData> packagesSystemOnly = new List<PackageData>();
@@ -202,9 +203,23 @@ namespace AppUninstaller
         private void toolStripButton2_Click(object sender, EventArgs e)
         {
             if(objectListViewPackages.CheckedObjects.Count > 0 &&
-                MessageBox.Show("Do you realy want to delete selected application?") == DialogResult.Yes)
+                MessageBox.Show("Do you realy want to delete selected application?",Application.ProductName, MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-
+                PackageManager pm = new PackageManager(GetSelecetedDevice());
+                foreach(PackageData package in objectListViewPackages.CheckedObjects)
+                {
+                    if (package.IsSystemApp)
+                    {
+                        pm.UninstallSystemPackage(package.Name);
+                        WriteLog($"System application '{package.Name}' successfully removed.");
+                    }
+                    else
+                    {
+                        pm.UninstallPackage(package.Name);
+                        WriteLog($"Application '{package.Name}' successfully removed.");
+                    }
+                }
+                FillPakageList();
             }
         }
     }

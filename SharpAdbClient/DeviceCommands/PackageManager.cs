@@ -233,6 +233,24 @@ namespace SharpAdbClient.DeviceCommands
         }
 
         /// <summary>
+        /// Uninstalls a system package from the device.
+        /// </summary>
+        /// <param name="packageName">
+        /// The name of the package to uninstall.
+        /// </param>
+        public void UninstallSystemPackage(string packageName)
+        {
+            this.ValidateDevice();
+
+            InstallReceiver receiver = new InstallReceiver();
+            this.Device.ExecuteShellCommand(this.client, $"pm uninstall --user 0 {packageName}", receiver);
+            if (!string.IsNullOrEmpty(receiver.ErrorMessage))
+            {
+                throw new PackageInstallationException(receiver.ErrorMessage);
+            }
+        }
+
+        /// <summary>
         /// Requests the version information from the device.
         /// </summary>
         /// <param name="packageName">
