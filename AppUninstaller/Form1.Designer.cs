@@ -161,7 +161,7 @@
             this.toolStripButton1.Image = global::AppUninstaller.Properties.Resources.round_arrow;
             this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(69, 24);
+            this.toolStripButton1.Size = new System.Drawing.Size(82, 24);
             this.toolStripButton1.Text = "Update";
             this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
             // 
@@ -175,7 +175,7 @@
             this.toolStripButton2.Image = global::AppUninstaller.Properties.Resources.rubbish_bin;
             this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton2.Name = "toolStripButton2";
-            this.toolStripButton2.Size = new System.Drawing.Size(77, 24);
+            this.toolStripButton2.Size = new System.Drawing.Size(90, 24);
             this.toolStripButton2.Text = "Uninstall";
             this.toolStripButton2.Click += new System.EventHandler(this.toolStripButton2_Click);
             // 
@@ -191,7 +191,7 @@
             // 
             this.toolStripLabelFilter.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.toolStripLabelFilter.Name = "toolStripLabelFilter";
-            this.toolStripLabelFilter.Size = new System.Drawing.Size(36, 24);
+            this.toolStripLabelFilter.Size = new System.Drawing.Size(45, 24);
             this.toolStripLabelFilter.Text = "Filter:";
             // 
             // comboBoxDevices
@@ -203,7 +203,7 @@
             this.comboBoxDevices.FormattingEnabled = true;
             this.comboBoxDevices.Location = new System.Drawing.Point(502, 15);
             this.comboBoxDevices.Name = "comboBoxDevices";
-            this.comboBoxDevices.Size = new System.Drawing.Size(248, 23);
+            this.comboBoxDevices.Size = new System.Drawing.Size(248, 28);
             this.comboBoxDevices.TabIndex = 3;
             // 
             // backgroundWorkerStartServer

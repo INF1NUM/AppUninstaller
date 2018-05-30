@@ -21,6 +21,7 @@ namespace SharpAdbClient.DeviceCommands
             ThirdPartyOnly,
             SystemOnly
         };
+
         private AppListType appListType;
 
         /// <summary>
@@ -59,63 +60,6 @@ namespace SharpAdbClient.DeviceCommands
         /// a given device.
         /// </summary>
         private readonly Func<DeviceData, ISyncService> syncServiceFactory;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PackageManager"/> class.
-        /// </summary>
-        /// <param name="device">
-        /// The device on which to look for packages.
-        /// </param>
-        /// <param name="thirdPartyOnly">
-        /// <see langword="true"/> to only indicate third party applications;
-        /// <see langword="false"/> to also include built-in applications.
-        /// </param>
-        /// <param name="client">
-        /// The <see cref="IAdbClient"/> to use to communicate with the Android Debug Bridge.
-        /// </param>
-        /// <param name="syncServiceFactory">
-        /// A function which returns a new instance of a class that implements the
-        /// <see cref="ISyncService"/> interface, that can be used to transfer files to and from
-        /// a given device.
-        /// </param>
-        /// <param name="skipInit">
-        /// A value indicating whether to skip the initial refresh of the package list or not. Used mainly by unit tests.
-        /// </param>
-        //public PackageManager(DeviceData device, bool thirdPartyOnly = false, IAdbClient client = null, Func<DeviceData, ISyncService> syncServiceFactory = null, bool skipInit = false)
-        //{
-        //    if (device == null)
-        //    {
-        //        throw new ArgumentNullException(nameof(device));
-        //    }
-
-        //    this.Device = device;
-        //    this.Packages = new Dictionary<string, string>();
-        //    this.ThirdPartyOnly = thirdPartyOnly;
-
-        //    // Default to AdbClient.Instance
-        //    if (client == null)
-        //    {
-        //        this.client = AdbClient.Instance;
-        //    }
-        //    else
-        //    {
-        //        this.client = client;
-        //    }
-
-        //    if (syncServiceFactory == null)
-        //    {
-        //        this.syncServiceFactory = Factories.SyncServiceFactory;
-        //    }
-        //    else
-        //    {
-        //        this.syncServiceFactory = syncServiceFactory;
-        //    }
-
-        //    if (!skipInit)
-        //    {
-        //        this.RefreshPackages();
-        //    }
-        //}
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PackageManager"/> class.
@@ -195,25 +139,6 @@ namespace SharpAdbClient.DeviceCommands
         /// Gets the device.
         /// </summary>
         public DeviceData Device { get; private set; }
-
-        /// <summary>
-        /// Refreshes the packages.
-        /// </summary>
-        //public void RefreshPackages()
-        //{
-        //    this.ValidateDevice();
-
-        //    PackageManagerReceiver pmr = new PackageManagerReceiver(this.Device, this);
-
-        //    if (this.ThirdPartyOnly)
-        //    {
-        //        this.Device.ExecuteShellCommand(this.client, ListThirdPartyOnly, pmr);
-        //    }
-        //    else
-        //    {
-        //        this.Device.ExecuteShellCommand(this.client, ListFull, pmr);
-        //    }
-        //}
 
         /// <summary>
         /// Refreshes the packages.
