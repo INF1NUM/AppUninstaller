@@ -104,15 +104,26 @@ namespace AppUninstaller
         {
             if (ServerIsRunning && devices.Count > 0)
             {
-                PackageManager pm = new PackageManager(GetSelecetedDevice(), PackageManager.AppListType.SystemOnly);
-                List<PackageData> packages = new List<PackageData>();
-                foreach (var package in pm.Packages)
+                PackageManager pmSystemOnly = new PackageManager(GetSelecetedDevice(), PackageManager.AppListType.SystemOnly);
+                PackageManager pmThirdParty = new PackageManager(GetSelecetedDevice(), PackageManager.AppListType.ThirdPartyOnly);
+                List<PackageData> packagesSystemOnly = new List<PackageData>();
+                List<PackageData> packagesThirdParty = new List<PackageData>();
+
+                foreach (var package in pmSystemOnly.Packages)
+                    packagesSystemOnly.Add(new PackageData(package.Key, package.Value, true));
+                foreach (var package in pmThirdParty.Packages)
+                    packagesThirdParty.Add(new PackageData(package.Key, package.Value, false));
+
+                objectListViewPackages.AllColumns[2].GroupKeyGetter = delegate (object x)
                 {
-                    //VersionInfo vi = pm.GetVersionInfo(package.Key);
-                    //packages.Add(new PackageData(package.Key, package.Value,vi.VersionName, vi.VersionCode));
-                    packages.Add(new PackageData(package.Key, package.Value));
-                }
-                objectListViewPackages.SetObjects(packages);
+                    return ((PackageData)x).IsSystemApp;
+                };
+
+                objectListViewPackages.SetObjects(packagesSystemOnly);
+                objectListViewPackages.AddObjects(packagesThirdParty);
+
+                
+
                 objectListViewPackages.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
             }
         }

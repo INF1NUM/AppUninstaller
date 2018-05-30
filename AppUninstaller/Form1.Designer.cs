@@ -44,6 +44,7 @@
             this.toolStripLabelFilter = new System.Windows.Forms.ToolStripLabel();
             this.comboBoxDevices = new System.Windows.Forms.ComboBox();
             this.backgroundWorkerStartServer = new System.ComponentModel.BackgroundWorker();
+            this.olvColumnIsSystemApp = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.objectListViewPackages)).BeginInit();
             this.toolStrip1.SuspendLayout();
@@ -110,13 +111,16 @@
             // 
             this.objectListViewPackages.AllColumns.Add(this.olvColumnName);
             this.objectListViewPackages.AllColumns.Add(this.olvColumnPath);
+            this.objectListViewPackages.AllColumns.Add(this.olvColumnIsSystemApp);
             this.objectListViewPackages.CellEditUseWholeCell = false;
             this.objectListViewPackages.CheckBoxes = true;
             this.objectListViewPackages.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.olvColumnName,
-            this.olvColumnPath});
+            this.olvColumnPath,
+            this.olvColumnIsSystemApp});
             this.objectListViewPackages.Cursor = System.Windows.Forms.Cursors.Default;
             this.objectListViewPackages.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.objectListViewPackages.EmptyListMsg = "Update package list";
             this.objectListViewPackages.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.objectListViewPackages.FullRowSelect = true;
             this.objectListViewPackages.GridLines = true;
@@ -128,6 +132,8 @@
             this.objectListViewPackages.UseCompatibleStateImageBehavior = false;
             this.objectListViewPackages.UseFilterIndicator = true;
             this.objectListViewPackages.UseFiltering = true;
+            this.objectListViewPackages.UseTranslucentHotItem = true;
+            this.objectListViewPackages.UseTranslucentSelection = true;
             this.objectListViewPackages.View = System.Windows.Forms.View.Details;
             // 
             // olvColumnName
@@ -211,6 +217,11 @@
             this.backgroundWorkerStartServer.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorkerStartServer_DoWork);
             this.backgroundWorkerStartServer.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorkerStartServer_RunWorkerCompleted);
             // 
+            // olvColumnIsSystemApp
+            // 
+            this.olvColumnIsSystemApp.AspectName = "IsSystemApp";
+            this.olvColumnIsSystemApp.Text = "System app";
+            // 
             // Form1
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -251,6 +262,7 @@
         private BrightIdeasSoftware.ObjectListView objectListViewPackages;
         private BrightIdeasSoftware.OLVColumn olvColumnName;
         private BrightIdeasSoftware.OLVColumn olvColumnPath;
+        private BrightIdeasSoftware.OLVColumn olvColumnIsSystemApp;
     }
 }
 
