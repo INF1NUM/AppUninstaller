@@ -76,6 +76,8 @@ namespace AppUninstaller
             ServerIsRunning = false;
             devices.Clear();
             objectListViewPackages.ClearObjects();
+            //label1.Text = string.Empty;
+            SetProduct(String.Empty);
         }
         
         private DeviceData GetSelecetedDevice()
@@ -98,6 +100,16 @@ namespace AppUninstaller
                 listView1.Items.Add(DateTime.Now.ToString(@"HH:mm:ss.ffff")).SubItems.Add(message);
                 listView1.EnsureVisible(listView1.Items.Count - 1);
             }
+        }
+
+        private void SetProduct(string product)
+        {
+            if (label1.InvokeRequired)
+            {
+                label1.BeginInvoke(new MethodInvoker(() => label1.Text = product));
+            }
+            else
+                label1.Text = product;
         }
 
         private void FillPakageList()
@@ -128,12 +140,7 @@ namespace AppUninstaller
                 objectListViewPackages.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
             }
         }
-
-        private void UninstallApp(PackageData package)
-        {
-            
-        }
-
+        
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (ServerIsRunning)
@@ -170,6 +177,8 @@ namespace AppUninstaller
         {
             this.BeginInvoke(new MethodInvoker(() => this.devices.Add(e.Device)));
             WriteLog($"The device {e.Device.Name} {e.Device.Serial} has connected to this PC");
+            var devProperties = e.Device.GetProperties();
+            SetProduct($"{devProperties["ro.product.brand"]} {devProperties["ro.product.model"]}");
         }
 
         private void OnDeviceDisconnected(object sender, DeviceDataEventArgs e)
@@ -177,7 +186,8 @@ namespace AppUninstaller
             if (e.Device.Equals(GetSelecetedDevice()))
                 objectListViewPackages.ClearObjects();
             this.BeginInvoke(new MethodInvoker(() => this.devices.Remove(e.Device)));
-            WriteLog($"The device {e.Device.Name} {e.Device.Serial} has disconnected to this PC");
+            SetProduct(String.Empty);
+            WriteLog($"The device {e.Device.Name} {e.Device.Serial} has disconnected to this PC"); 
         }
         
         private void toolStripButton1_Click(object sender, EventArgs e)

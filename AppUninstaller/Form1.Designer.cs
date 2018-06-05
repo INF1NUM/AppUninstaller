@@ -36,6 +36,7 @@
             this.objectListViewPackages = new BrightIdeasSoftware.ObjectListView();
             this.olvColumnName = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.olvColumnPath = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+            this.olvColumnIsSystemApp = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
@@ -44,7 +45,7 @@
             this.toolStripLabelFilter = new System.Windows.Forms.ToolStripLabel();
             this.comboBoxDevices = new System.Windows.Forms.ComboBox();
             this.backgroundWorkerStartServer = new System.ComponentModel.BackgroundWorker();
-            this.olvColumnIsSystemApp = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+            this.label1 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.objectListViewPackages)).BeginInit();
             this.toolStrip1.SuspendLayout();
@@ -132,6 +133,7 @@
             this.objectListViewPackages.UseCompatibleStateImageBehavior = false;
             this.objectListViewPackages.UseFilterIndicator = true;
             this.objectListViewPackages.UseFiltering = true;
+            this.objectListViewPackages.UseHotItem = true;
             this.objectListViewPackages.UseTranslucentHotItem = true;
             this.objectListViewPackages.UseTranslucentSelection = true;
             this.objectListViewPackages.View = System.Windows.Forms.View.Details;
@@ -145,6 +147,11 @@
             // 
             this.olvColumnPath.AspectName = "Path";
             this.olvColumnPath.Text = "Path";
+            // 
+            // olvColumnIsSystemApp
+            // 
+            this.olvColumnIsSystemApp.AspectName = "IsSystemApp";
+            this.olvColumnIsSystemApp.Text = "System app";
             // 
             // toolStrip1
             // 
@@ -202,12 +209,13 @@
             // 
             // comboBoxDevices
             // 
-            this.comboBoxDevices.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.comboBoxDevices.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.comboBoxDevices.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxDevices.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.comboBoxDevices.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.comboBoxDevices.FormattingEnabled = true;
-            this.comboBoxDevices.Location = new System.Drawing.Point(502, 15);
+            this.comboBoxDevices.Location = new System.Drawing.Point(142, 15);
             this.comboBoxDevices.Name = "comboBoxDevices";
             this.comboBoxDevices.Size = new System.Drawing.Size(248, 28);
             this.comboBoxDevices.TabIndex = 3;
@@ -217,15 +225,21 @@
             this.backgroundWorkerStartServer.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorkerStartServer_DoWork);
             this.backgroundWorkerStartServer.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorkerStartServer_RunWorkerCompleted);
             // 
-            // olvColumnIsSystemApp
+            // label1
             // 
-            this.olvColumnIsSystemApp.AspectName = "IsSystemApp";
-            this.olvColumnIsSystemApp.Text = "System app";
+            this.label1.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label1.Location = new System.Drawing.Point(397, 15);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(353, 28);
+            this.label1.TabIndex = 4;
+            this.label1.Text = "Product";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // Form1
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(767, 554);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.comboBoxDevices);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.listView1);
@@ -263,6 +277,7 @@
         private BrightIdeasSoftware.OLVColumn olvColumnName;
         private BrightIdeasSoftware.OLVColumn olvColumnPath;
         private BrightIdeasSoftware.OLVColumn olvColumnIsSystemApp;
+        private System.Windows.Forms.Label label1;
     }
 }
 
