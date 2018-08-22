@@ -92,8 +92,10 @@ namespace AppUninstaller
         {
             if (listView1.InvokeRequired)
             {
-                listView1.BeginInvoke(new MethodInvoker(() => listView1.Items.Add(DateTime.Now.ToString(@"HH:mm:ss.ffff")).SubItems.Add(message)));
-                listView1.BeginInvoke(new MethodInvoker(() => listView1.EnsureVisible(listView1.Items.Count - 1)));
+                listView1.Invoke((MethodInvoker)delegate () { listView1.Items.Add(DateTime.Now.ToString(@"HH:mm:ss.ffff")).SubItems.Add(message); });
+                listView1.Invoke((MethodInvoker)delegate () { listView1.EnsureVisible(listView1.Items.Count - 1); });
+                //listView1.BeginInvoke(new MethodInvoker(() => listView1.Items.Add(DateTime.Now.ToString(@"HH:mm:ss.ffff")).SubItems.Add(message)));
+                //listView1.BeginInvoke(new MethodInvoker(() => listView1.EnsureVisible(listView1.Items.Count - 1)));
             }
             else
             {
@@ -106,7 +108,8 @@ namespace AppUninstaller
         {
             if (label1.InvokeRequired)
             {
-                label1.BeginInvoke(new MethodInvoker(() => label1.Text = product));
+                //label1.BeginInvoke(new MethodInvoker(() => label1.Text = product));
+                label1.Invoke((MethodInvoker)delegate () { label1.Text = product; });
             }
             else
                 label1.Text = product;
@@ -175,18 +178,24 @@ namespace AppUninstaller
 
         private void OnDeviceConnected(object sender, DeviceDataEventArgs e)
         {
-            this.BeginInvoke(new MethodInvoker(() => this.devices.Add(e.Device)));
+            if (this.InvokeRequired)
+                this.Invoke((MethodInvoker)delegate () { this.devices.Add(e.Device); });
+            else
+                this.devices.Add(e.Device);
+            //var devProperties = e.Device.GetProperties();
+            //SetProduct($"{devProperties["ro.product.brand"]} {devProperties["ro.product.model"]}");
             WriteLog($"The device {e.Device.Name} {e.Device.Serial} has connected to this PC");
-            var devProperties = e.Device.GetProperties();
-            SetProduct($"{devProperties["ro.product.brand"]} {devProperties["ro.product.model"]}");
         }
 
         private void OnDeviceDisconnected(object sender, DeviceDataEventArgs e)
         {
             if (e.Device.Equals(GetSelecetedDevice()))
                 objectListViewPackages.ClearObjects();
-            this.BeginInvoke(new MethodInvoker(() => this.devices.Remove(e.Device)));
-            SetProduct(String.Empty);
+            if(this.InvokeRequired)
+                this.Invoke((MethodInvoker)delegate () { this.devices.Remove(e.Device); });
+            else
+                this.devices.Remove(e.Device);
+            //SetProduct(String.Empty);
             WriteLog($"The device {e.Device.Name} {e.Device.Serial} has disconnected to this PC"); 
         }
         

@@ -232,7 +232,6 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(353, 28);
             this.label1.TabIndex = 4;
-            this.label1.Text = "Product";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // Form1
