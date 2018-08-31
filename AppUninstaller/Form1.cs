@@ -25,14 +25,14 @@ namespace AppUninstaller
         }
 
         private BindingList<DeviceData> devices;
-        private bool adbServerIsRunning = false;
+        //private bool adbServerIsRunning = false;
         private DeviceMonitor deviceMonitor;
         private bool ServerIsRunning
         {
-            get { return adbServerIsRunning; }
+            //get { return adbServerIsRunning; }
             set
             {
-                adbServerIsRunning = value;
+                //adbServerIsRunning = value;
                 if (value)
                 {
                     buttonServer.BackColor = Color.Green;
@@ -56,6 +56,7 @@ namespace AppUninstaller
             var result = (StartServerResult)e.Result;
             if (AdbServer.Instance.GetStatus().IsRunning)
             {
+                
                 this.ServerIsRunning = true;
                 deviceMonitor = new DeviceMonitor(new AdbSocket(new IPEndPoint(IPAddress.Loopback, AdbClient.AdbServerPort)));
                 deviceMonitor.DeviceConnected += OnDeviceConnected;
@@ -117,7 +118,7 @@ namespace AppUninstaller
 
         private void FillPakageList()
         {
-            if (ServerIsRunning && devices.Count > 0)
+            if (AdbServer.Instance.GetStatus().IsRunning && devices.Count > 0)
             {
                 toolStripTextBoxFilter.Text = String.Empty;
                 PackageManager pmSystemOnly = new PackageManager(GetSelecetedDevice(), PackageManager.AppListType.SystemOnly);
@@ -146,7 +147,7 @@ namespace AppUninstaller
         
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (ServerIsRunning)
+            if (AdbServer.Instance.GetStatus().IsRunning)
             {
                 var result = MessageBox.Show("ADB server is running. Do you want to kill server and exit", "ADB Uninstaller", MessageBoxButtons.YesNoCancel);
                 if (result == DialogResult.Yes)
@@ -163,7 +164,7 @@ namespace AppUninstaller
 
         private void buttonServer_Click(object sender, EventArgs e)
         {
-            if (adbServerIsRunning)
+            if (AdbServer.Instance.GetStatus().IsRunning)
             {
                 StopServer();
                 WriteLog("Server stopped.");
