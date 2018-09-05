@@ -56,7 +56,6 @@ namespace AppUninstaller
             var result = (StartServerResult)e.Result;
             if (AdbServer.Instance.GetStatus().IsRunning)
             {
-                
                 this.ServerIsRunning = true;
                 deviceMonitor = new DeviceMonitor(new AdbSocket(new IPEndPoint(IPAddress.Loopback, AdbClient.AdbServerPort)));
                 deviceMonitor.DeviceConnected += OnDeviceConnected;
@@ -183,8 +182,8 @@ namespace AppUninstaller
                 this.Invoke((MethodInvoker)delegate () { this.devices.Add(e.Device); });
             else
                 this.devices.Add(e.Device);
-            //var devProperties = e.Device.GetProperties();
-            //SetProduct($"{devProperties["ro.product.brand"]} {devProperties["ro.product.model"]}");
+            var devProperties = e.Device.GetProperties();
+            SetProduct($"{devProperties["ro.product.brand"]} {devProperties["ro.product.model"]}");
             WriteLog($"The device {e.Device.Name} {e.Device.Serial} has connected to this PC");
         }
 
