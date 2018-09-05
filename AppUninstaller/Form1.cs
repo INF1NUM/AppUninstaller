@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using BrightIdeasSoftware;
@@ -14,72 +15,49 @@ using SharpAdbClient.DeviceCommands;
 
 namespace AppUninstaller
 {
-    public partial class Form1 : Form
+    public partial class FormMain : Form
     {
-        public Form1()
+        public FormMain()
         {
             InitializeComponent();
+            buttonServerStop.Enabled = false;
             devices = new BindingList<DeviceData>();
             comboBoxDevices.DataSource = devices;
             comboBoxDevices.DisplayMember = "Serial";
         }
 
         private BindingList<DeviceData> devices;
-        //private bool adbServerIsRunning = false;
         private DeviceMonitor deviceMonitor;
-        private bool ServerIsRunning
-        {
-            //get { return adbServerIsRunning; }
-            set
-            {
-                //adbServerIsRunning = value;
-                if (value)
-                {
-                    buttonServer.BackColor = Color.Green;
-                    buttonServer.Text = "Stop";
-                }
-                else
-                {
-                    buttonServer.BackColor = Color.Red;
-                    buttonServer.Text = "Start";
-                }
-            }
-        }
-        
-        private void backgroundWorkerStartServer_DoWork(object sender, DoWorkEventArgs e)
-        {
-            e.Result = AdbServer.Instance.StartServer(Application.StartupPath + @"\tools\adb.exe", false);
-        }
 
-        private void backgroundWorkerStartServer_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        private void ControlInvoke(Control control, MethodInvoker methodInvoker)
         {
-            var result = (StartServerResult)e.Result;
-            if (AdbServer.Instance.GetStatus().IsRunning)
-            {
-                this.ServerIsRunning = true;
-                deviceMonitor = new DeviceMonitor(new AdbSocket(new IPEndPoint(IPAddress.Loopback, AdbClient.AdbServerPort)));
-                deviceMonitor.DeviceConnected += OnDeviceConnected;
-                deviceMonitor.DeviceDisconnected += OnDeviceDisconnected;
-                deviceMonitor.Start();
-                buttonServer.Enabled = true;
-                WriteLog($"Server started with result: {result.ToString()}");
-                WriteLog($"ADB version: {AdbServer.Instance.GetStatus().Version}");
-            }
+            if (control.InvokeRequired)
+                control.BeginInvoke(methodInvoker);
             else
-                WriteLog($"Server NOT started with result: {result.ToString()}");
+                methodInvoker();
         }
 
-        private void StopServer()
+        private void WriteLog(string text)
+        {
+            ControlInvoke(listViewLog, (MethodInvoker)delegate ()
+            {
+                listViewLog.Items.Add(new ListViewItem(new string[] { DateTime.Now.ToString(@"HH:mm:ss.ffff"), text }));
+                listViewLog.Items[listViewLog.Items.Count - 1].EnsureVisible();
+            });
+
+        }
+
+        private void ServerStop()
         {
             deviceMonitor.Dispose();
             AdbClient.Instance.KillAdb();
-            ServerIsRunning = false;
             devices.Clear();
             objectListViewPackages.ClearObjects();
-            //label1.Text = string.Empty;
             SetProduct(String.Empty);
+            buttonServerStop.Enabled = false;
+            buttonServerStart.Enabled = true;
         }
-        
+
         private DeviceData GetSelecetedDevice()
         {
             if (comboBoxDevices.InvokeRequired)
@@ -88,31 +66,29 @@ namespace AppUninstaller
                 return (DeviceData)comboBoxDevices.SelectedItem;
         }
 
-        private void WriteLog(string message)
+        private void SetProduct(DeviceData deviceData)
         {
-            if (listView1.InvokeRequired)
+            Task.Factory.StartNew(() =>
             {
-                listView1.Invoke((MethodInvoker)delegate () { listView1.Items.Add(DateTime.Now.ToString(@"HH:mm:ss.ffff")).SubItems.Add(message); });
-                listView1.Invoke((MethodInvoker)delegate () { listView1.EnsureVisible(listView1.Items.Count - 1); });
-                //listView1.BeginInvoke(new MethodInvoker(() => listView1.Items.Add(DateTime.Now.ToString(@"HH:mm:ss.ffff")).SubItems.Add(message)));
-                //listView1.BeginInvoke(new MethodInvoker(() => listView1.EnsureVisible(listView1.Items.Count - 1)));
-            }
-            else
-            {
-                listView1.Items.Add(DateTime.Now.ToString(@"HH:mm:ss.ffff")).SubItems.Add(message);
-                listView1.EnsureVisible(listView1.Items.Count - 1);
-            }
+                Thread.Sleep(1000);
+                var properties = DeviceExtensions.GetProperties(deviceData);
+
+                if (properties.Count > 0)
+                {
+                    ControlInvoke(labelDeviceName, (MethodInvoker)delegate ()
+                    {
+                        labelDeviceName.Text = properties["ro.product.brand"] + " " + properties["ro.product.model"];
+                    });
+                }
+            });
         }
 
-        private void SetProduct(string product)
+        private void SetProduct(string text)
         {
-            if (label1.InvokeRequired)
+            ControlInvoke(labelDeviceName, (MethodInvoker)delegate ()
             {
-                //label1.BeginInvoke(new MethodInvoker(() => label1.Text = product));
-                label1.Invoke((MethodInvoker)delegate () { label1.Text = product; });
-            }
-            else
-                label1.Text = product;
+                labelDeviceName.Text = text;
+            });
         }
 
         private void FillPakageList()
@@ -137,20 +113,42 @@ namespace AppUninstaller
 
                 objectListViewPackages.SetObjects(packagesSystemOnly);
                 objectListViewPackages.AddObjects(packagesThirdParty);
-
-                
-
                 objectListViewPackages.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
             }
         }
-        
+
+        private void backgroundWorkerStartServer_DoWork(object sender, DoWorkEventArgs e)
+        {
+            e.Result = AdbServer.Instance.StartServer(Application.StartupPath + @"\tools\adb.exe", true);
+        }
+
+        private void backgroundWorkerStartServer_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            var result = (StartServerResult)e.Result;
+            if (AdbServer.Instance.GetStatus().IsRunning)
+            {
+                deviceMonitor = new DeviceMonitor(new AdbSocket(new IPEndPoint(IPAddress.Loopback, AdbClient.AdbServerPort)));
+                deviceMonitor.DeviceConnected += OnDeviceConnected;
+                deviceMonitor.DeviceDisconnected += OnDeviceDisconnected;
+                deviceMonitor.Start();
+                buttonServerStop.Enabled = true;
+                WriteLog($"Server started with result: {result.ToString()}");
+                WriteLog($"ADB version: {AdbServer.Instance.GetStatus().Version}");
+            }
+            else
+            {
+                WriteLog($"Server NOT started with result: {result.ToString()}");
+                buttonServerStart.Enabled = true;
+            }
+        }
+
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (AdbServer.Instance.GetStatus().IsRunning)
             {
                 var result = MessageBox.Show("ADB server is running. Do you want to kill server and exit", "ADB Uninstaller", MessageBoxButtons.YesNoCancel);
                 if (result == DialogResult.Yes)
-                    StopServer();
+                    ServerStop();
                 else
                 {
                     if (result == DialogResult.Cancel)
@@ -161,49 +159,36 @@ namespace AppUninstaller
             }
         }
 
-        private void buttonServer_Click(object sender, EventArgs e)
+        private void buttonServerStart_Click(object sender, EventArgs e)
         {
-            if (AdbServer.Instance.GetStatus().IsRunning)
-            {
-                StopServer();
-                WriteLog("Server stopped.");
-            }
-            else
-            {
-                buttonServer.Enabled = false;
-                buttonServer.Text = "Starting...";
-                backgroundWorkerStartServer.RunWorkerAsync();
-            }
+            buttonServerStart.Enabled = false;
+            backgroundWorkerStartServer.RunWorkerAsync();
         }
 
         private void OnDeviceConnected(object sender, DeviceDataEventArgs e)
         {
-            if (this.InvokeRequired)
-                this.Invoke((MethodInvoker)delegate () { this.devices.Add(e.Device); });
-            else
-                this.devices.Add(e.Device);
-            var devProperties = e.Device.GetProperties();
-            SetProduct($"{devProperties["ro.product.brand"]} {devProperties["ro.product.model"]}");
+            ControlInvoke(this, (MethodInvoker)delegate () { this.devices.Add(e.Device); });
             WriteLog($"The device {e.Device.Name} {e.Device.Serial} has connected to this PC");
+            SetProduct(e.Device);
         }
 
         private void OnDeviceDisconnected(object sender, DeviceDataEventArgs e)
         {
             if (e.Device.Equals(GetSelecetedDevice()))
                 objectListViewPackages.ClearObjects();
-            if(this.InvokeRequired)
+            if (this.InvokeRequired)
                 this.Invoke((MethodInvoker)delegate () { this.devices.Remove(e.Device); });
             else
                 this.devices.Remove(e.Device);
-            //SetProduct(String.Empty);
-            WriteLog($"The device {e.Device.Name} {e.Device.Serial} has disconnected to this PC"); 
+            SetProduct(String.Empty);
+            WriteLog($"The device {e.Device.Name} {e.Device.Serial} has disconnected to this PC");
         }
-        
+
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
             FillPakageList();
         }
-        
+
         private void toolStripTextBoxFilter_TextChanged(object sender, EventArgs e)
         {
             TextMatchFilter filter = null;
@@ -221,11 +206,12 @@ namespace AppUninstaller
 
         private void toolStripButton2_Click(object sender, EventArgs e)
         {
-            if(objectListViewPackages.CheckedObjects.Count > 0 &&
-                MessageBox.Show("Do you realy want to delete selected application?",Application.ProductName, MessageBoxButtons.YesNo) == DialogResult.Yes)
+            if (objectListViewPackages.CheckedObjects.Count > 0 &&
+                MessageBox.Show("Do you realy want to delete selected application?", Application.ProductName, MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
                 PackageManager pm = new PackageManager(GetSelecetedDevice());
-                foreach(PackageData package in objectListViewPackages.CheckedObjects)
+
+                foreach (PackageData package in objectListViewPackages.CheckedObjects)
                 {
                     if (package.IsSystemApp)
                     {
@@ -240,6 +226,11 @@ namespace AppUninstaller
                 }
                 FillPakageList();
             }
+        }
+
+        private void buttonServerStop_Click(object sender, EventArgs e)
+        {
+            ServerStop();
         }
     }
 }
