@@ -178,7 +178,7 @@ namespace AppUninstaller
             this.BeginInvoke(new MethodInvoker(() => this.devices.Add(e.Device)));
             WriteLog($"The device {e.Device.Name} {e.Device.Serial} has connected to this PC");
             var devProperties = e.Device.GetProperties();
-            SetProduct($"{devProperties["ro.product.brand"]} {devProperties["ro.product.model"]}");
+            //SetProduct($"{devProperties["ro.product.brand"]} {devProperties["ro.product.model"]}");
         }
 
         private void OnDeviceDisconnected(object sender, DeviceDataEventArgs e)
@@ -186,7 +186,7 @@ namespace AppUninstaller
             if (e.Device.Equals(GetSelecetedDevice()))
                 objectListViewPackages.ClearObjects();
             this.BeginInvoke(new MethodInvoker(() => this.devices.Remove(e.Device)));
-            SetProduct(String.Empty);
+            //SetProduct(String.Empty);
             WriteLog($"The device {e.Device.Name} {e.Device.Serial} has disconnected to this PC"); 
         }
         
