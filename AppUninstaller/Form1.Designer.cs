@@ -1,6 +1,6 @@
 ﻿namespace AppUninstaller
 {
-    partial class Form1
+    partial class FormMain
     {
         /// <summary>
         /// Обязательная переменная конструктора.
@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.buttonServer = new System.Windows.Forms.Button();
-            this.listView1 = new System.Windows.Forms.ListView();
+            this.buttonServerStart = new System.Windows.Forms.Button();
+            this.listViewLog = new System.Windows.Forms.ListView();
             this.columnHeaderTime = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeaderMessage = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.panel1 = new System.Windows.Forms.Panel();
@@ -45,45 +45,45 @@
             this.toolStripLabelFilter = new System.Windows.Forms.ToolStripLabel();
             this.comboBoxDevices = new System.Windows.Forms.ComboBox();
             this.backgroundWorkerStartServer = new System.ComponentModel.BackgroundWorker();
-            this.label1 = new System.Windows.Forms.Label();
+            this.labelDeviceName = new System.Windows.Forms.Label();
+            this.groupBoxServer = new System.Windows.Forms.GroupBox();
+            this.buttonServerStop = new System.Windows.Forms.Button();
+            this.groupBoxDevice = new System.Windows.Forms.GroupBox();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.objectListViewPackages)).BeginInit();
             this.toolStrip1.SuspendLayout();
+            this.groupBoxServer.SuspendLayout();
+            this.groupBoxDevice.SuspendLayout();
             this.SuspendLayout();
             // 
-            // buttonServer
+            // buttonServerStart
             // 
-            this.buttonServer.BackColor = System.Drawing.Color.Red;
-            this.buttonServer.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.buttonServer.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.buttonServer.ForeColor = System.Drawing.Color.White;
-            this.buttonServer.Location = new System.Drawing.Point(17, 15);
-            this.buttonServer.Margin = new System.Windows.Forms.Padding(4);
-            this.buttonServer.Name = "buttonServer";
-            this.buttonServer.Size = new System.Drawing.Size(118, 28);
-            this.buttonServer.TabIndex = 0;
-            this.buttonServer.Text = "Start server";
-            this.buttonServer.UseVisualStyleBackColor = false;
-            this.buttonServer.Click += new System.EventHandler(this.buttonServer_Click);
+            this.buttonServerStart.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.buttonServerStart.Location = new System.Drawing.Point(7, 24);
+            this.buttonServerStart.Name = "buttonServerStart";
+            this.buttonServerStart.Size = new System.Drawing.Size(70, 28);
+            this.buttonServerStart.TabIndex = 0;
+            this.buttonServerStart.Text = "Start";
+            this.buttonServerStart.Click += new System.EventHandler(this.buttonServerStart_Click);
             // 
-            // listView1
+            // listViewLog
             // 
-            this.listView1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            this.listViewLog.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.listViewLog.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeaderTime,
             this.columnHeaderMessage});
-            this.listView1.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.listView1.FullRowSelect = true;
-            this.listView1.GridLines = true;
-            this.listView1.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
-            this.listView1.Location = new System.Drawing.Point(17, 404);
-            this.listView1.Margin = new System.Windows.Forms.Padding(4);
-            this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(732, 134);
-            this.listView1.TabIndex = 1;
-            this.listView1.UseCompatibleStateImageBehavior = false;
-            this.listView1.View = System.Windows.Forms.View.Details;
+            this.listViewLog.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.listViewLog.FullRowSelect = true;
+            this.listViewLog.GridLines = true;
+            this.listViewLog.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
+            this.listViewLog.Location = new System.Drawing.Point(17, 404);
+            this.listViewLog.Margin = new System.Windows.Forms.Padding(4);
+            this.listViewLog.Name = "listViewLog";
+            this.listViewLog.Size = new System.Drawing.Size(770, 134);
+            this.listViewLog.TabIndex = 1;
+            this.listViewLog.UseCompatibleStateImageBehavior = false;
+            this.listViewLog.View = System.Windows.Forms.View.Details;
             // 
             // columnHeaderTime
             // 
@@ -102,10 +102,10 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel1.Controls.Add(this.objectListViewPackages);
             this.panel1.Controls.Add(this.toolStrip1);
-            this.panel1.Location = new System.Drawing.Point(17, 59);
+            this.panel1.Location = new System.Drawing.Point(17, 79);
             this.panel1.Margin = new System.Windows.Forms.Padding(4);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(733, 337);
+            this.panel1.Size = new System.Drawing.Size(771, 317);
             this.panel1.TabIndex = 2;
             // 
             // objectListViewPackages
@@ -128,7 +128,7 @@
             this.objectListViewPackages.Location = new System.Drawing.Point(0, 27);
             this.objectListViewPackages.Name = "objectListViewPackages";
             this.objectListViewPackages.ShowGroups = false;
-            this.objectListViewPackages.Size = new System.Drawing.Size(733, 310);
+            this.objectListViewPackages.Size = new System.Drawing.Size(771, 290);
             this.objectListViewPackages.TabIndex = 1;
             this.objectListViewPackages.UseCompatibleStateImageBehavior = false;
             this.objectListViewPackages.UseFilterIndicator = true;
@@ -165,7 +165,7 @@
             this.toolStripLabelFilter});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(733, 27);
+            this.toolStrip1.Size = new System.Drawing.Size(771, 27);
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -174,7 +174,7 @@
             this.toolStripButton1.Image = global::AppUninstaller.Properties.Resources.round_arrow;
             this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(69, 24);
+            this.toolStripButton1.Size = new System.Drawing.Size(82, 24);
             this.toolStripButton1.Text = "Update";
             this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
             // 
@@ -188,7 +188,7 @@
             this.toolStripButton2.Image = global::AppUninstaller.Properties.Resources.rubbish_bin;
             this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton2.Name = "toolStripButton2";
-            this.toolStripButton2.Size = new System.Drawing.Size(77, 24);
+            this.toolStripButton2.Size = new System.Drawing.Size(90, 24);
             this.toolStripButton2.Text = "Uninstall";
             this.toolStripButton2.Click += new System.EventHandler(this.toolStripButton2_Click);
             // 
@@ -204,7 +204,7 @@
             // 
             this.toolStripLabelFilter.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.toolStripLabelFilter.Name = "toolStripLabelFilter";
-            this.toolStripLabelFilter.Size = new System.Drawing.Size(36, 24);
+            this.toolStripLabelFilter.Size = new System.Drawing.Size(45, 24);
             this.toolStripLabelFilter.Text = "Filter:";
             // 
             // comboBoxDevices
@@ -213,9 +213,9 @@
             this.comboBoxDevices.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.comboBoxDevices.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.comboBoxDevices.FormattingEnabled = true;
-            this.comboBoxDevices.Location = new System.Drawing.Point(142, 15);
+            this.comboBoxDevices.Location = new System.Drawing.Point(6, 24);
             this.comboBoxDevices.Name = "comboBoxDevices";
-            this.comboBoxDevices.Size = new System.Drawing.Size(248, 23);
+            this.comboBoxDevices.Size = new System.Drawing.Size(206, 28);
             this.comboBoxDevices.TabIndex = 3;
             // 
             // backgroundWorkerStartServer
@@ -223,43 +223,79 @@
             this.backgroundWorkerStartServer.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorkerStartServer_DoWork);
             this.backgroundWorkerStartServer.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorkerStartServer_RunWorkerCompleted);
             // 
-            // label1
+            // labelDeviceName
             // 
-            this.label1.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label1.Location = new System.Drawing.Point(397, 15);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(353, 28);
-            this.label1.TabIndex = 4;
-            this.label1.Text = "Product";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.labelDeviceName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelDeviceName.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.labelDeviceName.Location = new System.Drawing.Point(218, 24);
+            this.labelDeviceName.Name = "labelDeviceName";
+            this.labelDeviceName.Size = new System.Drawing.Size(386, 28);
+            this.labelDeviceName.TabIndex = 4;
+            this.labelDeviceName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // Form1
+            // groupBoxServer
+            // 
+            this.groupBoxServer.Controls.Add(this.buttonServerStop);
+            this.groupBoxServer.Controls.Add(this.buttonServerStart);
+            this.groupBoxServer.Location = new System.Drawing.Point(12, 12);
+            this.groupBoxServer.Name = "groupBoxServer";
+            this.groupBoxServer.Size = new System.Drawing.Size(160, 60);
+            this.groupBoxServer.TabIndex = 5;
+            this.groupBoxServer.TabStop = false;
+            this.groupBoxServer.Text = "Server";
+            // 
+            // buttonServerStop
+            // 
+            this.buttonServerStop.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.buttonServerStop.Location = new System.Drawing.Point(83, 24);
+            this.buttonServerStop.Name = "buttonServerStop";
+            this.buttonServerStop.Size = new System.Drawing.Size(70, 28);
+            this.buttonServerStop.TabIndex = 1;
+            this.buttonServerStop.Text = "Stop";
+            this.buttonServerStop.Click += new System.EventHandler(this.buttonServerStop_Click);
+            // 
+            // groupBoxDevice
+            // 
+            this.groupBoxDevice.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBoxDevice.Controls.Add(this.comboBoxDevices);
+            this.groupBoxDevice.Controls.Add(this.labelDeviceName);
+            this.groupBoxDevice.Location = new System.Drawing.Point(178, 12);
+            this.groupBoxDevice.Name = "groupBoxDevice";
+            this.groupBoxDevice.Size = new System.Drawing.Size(610, 60);
+            this.groupBoxDevice.TabIndex = 6;
+            this.groupBoxDevice.TabStop = false;
+            this.groupBoxDevice.Text = "Device";
+            // 
+            // FormMain
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.ClientSize = new System.Drawing.Size(767, 554);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.comboBoxDevices);
+            this.ClientSize = new System.Drawing.Size(805, 554);
+            this.Controls.Add(this.groupBoxDevice);
+            this.Controls.Add(this.groupBoxServer);
             this.Controls.Add(this.panel1);
-            this.Controls.Add(this.listView1);
-            this.Controls.Add(this.buttonServer);
+            this.Controls.Add(this.listViewLog);
             this.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.Margin = new System.Windows.Forms.Padding(4);
-            this.Name = "Form1";
-            this.Text = "Form1";
+            this.Name = "FormMain";
+            this.Text = "AppUninstaller";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.objectListViewPackages)).EndInit();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
+            this.groupBoxServer.ResumeLayout(false);
+            this.groupBoxDevice.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.Button buttonServer;
-        private System.Windows.Forms.ListView listView1;
+        private System.Windows.Forms.Button buttonServerStart;
+        private System.Windows.Forms.ListView listViewLog;
         private System.Windows.Forms.ColumnHeader columnHeaderTime;
         private System.Windows.Forms.ColumnHeader columnHeaderMessage;
         private System.Windows.Forms.Panel panel1;
@@ -275,7 +311,10 @@
         private BrightIdeasSoftware.OLVColumn olvColumnName;
         private BrightIdeasSoftware.OLVColumn olvColumnPath;
         private BrightIdeasSoftware.OLVColumn olvColumnIsSystemApp;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label labelDeviceName;
+        private System.Windows.Forms.GroupBox groupBoxServer;
+        private System.Windows.Forms.Button buttonServerStop;
+        private System.Windows.Forms.GroupBox groupBoxDevice;
     }
 }
 
