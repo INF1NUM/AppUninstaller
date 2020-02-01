@@ -73,10 +73,11 @@
             this.listViewLog.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeaderTime,
             this.columnHeaderMessage});
-            this.listViewLog.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.listViewLog.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.listViewLog.FullRowSelect = true;
             this.listViewLog.GridLines = true;
             this.listViewLog.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
+            this.listViewLog.HideSelection = false;
             this.listViewLog.Location = new System.Drawing.Point(17, 404);
             this.listViewLog.Margin = new System.Windows.Forms.Padding(4);
             this.listViewLog.Name = "listViewLog";
@@ -125,6 +126,7 @@
             this.objectListViewPackages.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.objectListViewPackages.FullRowSelect = true;
             this.objectListViewPackages.GridLines = true;
+            this.objectListViewPackages.HideSelection = false;
             this.objectListViewPackages.Location = new System.Drawing.Point(0, 27);
             this.objectListViewPackages.Name = "objectListViewPackages";
             this.objectListViewPackages.ShowGroups = false;
@@ -174,7 +176,7 @@
             this.toolStripButton1.Image = global::AppUninstaller.Properties.Resources.round_arrow;
             this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(82, 24);
+            this.toolStripButton1.Size = new System.Drawing.Size(69, 24);
             this.toolStripButton1.Text = "Update";
             this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
             // 
@@ -188,7 +190,7 @@
             this.toolStripButton2.Image = global::AppUninstaller.Properties.Resources.rubbish_bin;
             this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton2.Name = "toolStripButton2";
-            this.toolStripButton2.Size = new System.Drawing.Size(90, 24);
+            this.toolStripButton2.Size = new System.Drawing.Size(77, 24);
             this.toolStripButton2.Text = "Uninstall";
             this.toolStripButton2.Click += new System.EventHandler(this.toolStripButton2_Click);
             // 
@@ -204,7 +206,7 @@
             // 
             this.toolStripLabelFilter.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.toolStripLabelFilter.Name = "toolStripLabelFilter";
-            this.toolStripLabelFilter.Size = new System.Drawing.Size(45, 24);
+            this.toolStripLabelFilter.Size = new System.Drawing.Size(36, 24);
             this.toolStripLabelFilter.Text = "Filter:";
             // 
             // comboBoxDevices
@@ -215,7 +217,7 @@
             this.comboBoxDevices.FormattingEnabled = true;
             this.comboBoxDevices.Location = new System.Drawing.Point(6, 24);
             this.comboBoxDevices.Name = "comboBoxDevices";
-            this.comboBoxDevices.Size = new System.Drawing.Size(206, 28);
+            this.comboBoxDevices.Size = new System.Drawing.Size(206, 23);
             this.comboBoxDevices.TabIndex = 3;
             // 
             // backgroundWorkerStartServer
